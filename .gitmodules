@@ -4,3 +4,6 @@
 [submodule "lib/uru3"]
 	path = lib/uru3
 	url = https://github.com/grwlf/uru3
+[submodule "lib/urweb-monad-pack"]
+	path = lib/urweb-monad-pack
+	url = https://github.com/grwlf/urweb-monad-pack
