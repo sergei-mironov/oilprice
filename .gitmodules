@@ -1,3 +1,6 @@
 [submodule "lib/urweb-prelude"]
 	path = lib/urweb-prelude
 	url = https://github.com/grwlf/urweb-prelude
+[submodule "lib/uru3"]
+	path = lib/uru3
+	url = https://github.com/grwlf/uru3
