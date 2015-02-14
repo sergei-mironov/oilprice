@@ -1,2 +1,2 @@
-val binary : unit -> transaction blob
+val blob : unit -> transaction blob
 val text : unit -> transaction string

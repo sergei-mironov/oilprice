@@ -25,7 +25,7 @@ fun template mb : transaction page =
   JQuery.add (
   Bootstrap.add (
   BootstrapMisc.add (
-  Uru.withStylesheet (Oilprice_css.geturl) (
+  Uru.withStylesheet (Oilprice_css.url) (
   Uru.withBody (fn _ =>
       b <- X.run mb;
       return
