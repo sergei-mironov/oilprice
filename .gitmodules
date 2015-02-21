@@ -10,3 +10,6 @@
 [submodule "lib/urweb-xmlw"]
 	path = lib/urweb-xmlw
 	url = https://github.com/grwlf/urweb-xmlw
+[submodule "lib/urweb-soup"]
+	path = lib/urweb-soup
+	url = https://github.com/grwlf/urweb-soup
