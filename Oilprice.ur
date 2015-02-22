@@ -1,7 +1,7 @@
 
 structure B = Bootstrap
 structure BM = BootstrapMisc
-structure X = XmlGen
+structure X = XMLW
 structure P = Prelude
 
 val swap = @@P.swap
@@ -16,6 +16,7 @@ val push_front = @@X.push_front
 val push_back_ = @@X.push_back_
 val push_front_ = @@X.push_front_
 val push_back_xml = @@X.push_back_xml
+val x = @@X.push_back_xml
 val data = data_attr data_kind
 val aria = data_attr aria_kind
 
@@ -25,20 +26,102 @@ fun template mb : transaction page =
   JQuery.add (
   Bootstrap.add (
   BootstrapMisc.add (
-  Uru.withStylesheet (Oilprice_css.url) (
+  Soup.narrow (fn nar =>
   Uru.withBody (fn _ =>
       b <- X.run mb;
       return
       <xml>
-        <div class={B.container}>
+          {nar.Container
+          <xml>
+    
+            {Soup.forkme_ribbon (bless "https://github.com/grwlf/urweb-oilprice")}
+            {b}
+            <p>
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text ever
+            since the 1500s, when an unknown printer took a galley of type and
+            scrambled it to make a type specimen book. It has survived not only
+            five centuries, but also the leap into electronic typesetting,
+            remaining essentially unchanged. It was popularised in the 1960s with
+            the release of Letraset sheets containing Lorem Ipsum passages, and
+            more recently with desktop publishing software like Aldus PageMaker
+            including versions of Lorem Ipsum.
+            </p>
+            <p>
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text ever
+            since the 1500s, when an unknown printer took a galley of type and
+            scrambled it to make a type specimen book. It has survived not only
+            five centuries, but also the leap into electronic typesetting,
+            remaining essentially unchanged. It was popularised in the 1960s with
+            the release of Letraset sheets containing Lorem Ipsum passages, and
+            more recently with desktop publishing software like Aldus PageMaker
+            including versions of Lorem Ipsum.
+            </p>
+            <p>
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text ever
+            since the 1500s, when an unknown printer took a galley of type and
+            scrambled it to make a type specimen book. It has survived not only
+            five centuries, but also the leap into electronic typesetting,
+            remaining essentially unchanged. It was popularised in the 1960s with
+            the release of Letraset sheets containing Lorem Ipsum passages, and
+            more recently with desktop publishing software like Aldus PageMaker
+            including versions of Lorem Ipsum.
+            </p>
+            <p>
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text ever
+            since the 1500s, when an unknown printer took a galley of type and
+            scrambled it to make a type specimen book. It has survived not only
+            five centuries, but also the leap into electronic typesetting,
+            remaining essentially unchanged. It was popularised in the 1960s with
+            the release of Letraset sheets containing Lorem Ipsum passages, and
+            more recently with desktop publishing software like Aldus PageMaker
+            including versions of Lorem Ipsum.
+            </p>
+            <p>
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text ever
+            since the 1500s, when an unknown printer took a galley of type and
+            scrambled it to make a type specimen book. It has survived not only
+            five centuries, but also the leap into electronic typesetting,
+            remaining essentially unchanged. It was popularised in the 1960s with
+            the release of Letraset sheets containing Lorem Ipsum passages, and
+            more recently with desktop publishing software like Aldus PageMaker
+            including versions of Lorem Ipsum.
+            </p>
+            <p>
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text ever
+            since the 1500s, when an unknown printer took a galley of type and
+            scrambled it to make a type specimen book. It has survived not only
+            five centuries, but also the leap into electronic typesetting,
+            remaining essentially unchanged. It was popularised in the 1960s with
+            the release of Letraset sheets containing Lorem Ipsum passages, and
+            more recently with desktop publishing software like Aldus PageMaker
+            including versions of Lorem Ipsum.
+            </p>
+          </xml>}
 
-          {b}
+          {nar.Footer
+          <xml>
+            <hr/>
+            <p class={B.text_muted}>
+              Powerd by <a href={bless "http://impredicative.com/ur/"}>Ur/Web</a> framework.
+            </p>
+            <p class={B.text_muted}>
+            <ul style="padding-left: 0px; margin-top: 20px; color: #999;">
+              {Soup.footer_doc_links (
+              <xml><a href={bless "http://github.com/grwlf/tsyrenshop"}>Sources</a></xml> ::
+              <xml><a href={bless "http://impredicative.com/ur/"}>Ur/Web</a></xml> ::
+              <xml><a href={bless "http://github.com"}>GiHub</a></xml> ::
+              []
+              )}
+            </ul>
+            </p>
+          </xml>}
 
-          <a href={bless "https://github.com/grwlf/uru3"}>
-            <img style="position:absolute; top:0; right:0; border:0;" src={bless "https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67"} alt="Fork me on GitHub" data={data_attr data_kind "canonical-src" "https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"}/>
-          </a>
-
-        </div> <!-- /container -->
       </xml>
 
     ))))))
@@ -63,6 +146,52 @@ fun push_slider o =
   </xml>;
   return s
 
+fun push_slider2 (f:float -> float) o =
+  s1 <- lift (source 0);
+  s2 <- lift (source 0.0);
+  i <- lift fresh;
+  return {
+    Sig1 = s1,
+    Sig2 = s2,
+    XML = <xml>
+      <ctextbox id={i}/>
+      <active code={
+        BM.slider_add i
+          (o ++ 
+           { Label = "Current value",
+           Tooltip = "hide",
+           OnSlide = (fn (v:int) => set s1 v; set s2 (f (float v))) 
+           });
+        return <xml/>
+      }/>
+    </xml>}
+
+fun m2b (m:float) : float = m * 7.1428571428571
+
+val income_rub : float = 15.0*(pow 10.0 12.0) + 82.4 * (pow 10.0 9.0)
+
+val oil_share = 0.5
+
+val exp_bar = m2b (236.6 * (pow 10.0 6.0))
+
+val usd_bar = 60.0
+
+val oilinc_usd = (exp_bar * usd_bar)
+
+val rub_usd = (income_rub * oil_share) / oilinc_usd
+
+
+fun xdiv cls m =
+  push_back (nest (fn x=><xml><div class={cls}>{x}</div></xml>) m)
+
+val xrow = xdiv B.row
+
+val xcol = xdiv B.col_md_6
+
+fun ipow a b = pow (float a) (float b)
+
+fun viewsig s = <xml><dyn signal={v <- signal s; return <xml>{[v]}</xml>}/></xml>
+
 fun main {} : transaction page =
   template (
     
@@ -71,18 +200,81 @@ fun main {} : transaction page =
       <h1>Oil price</h1>
     </xml>;
 
-    s1 <- push_slider { Min=1, Max=20, Step=1, Value=1 };
-    push_back_xml <xml><br/></xml>;
-    s2 <- push_slider { Min=1, Max=20, Step=1, Value=13 };
-    push_back_xml <xml><br/></xml>;
+    s1 <- push_slider2 (fn x => x * (ipow 10 12)) {Min=10, Max=20, Step=1, Value=15};
+    s2 <- push_slider2 (fn x => x * (ipow 10 6)) {Min=200, Max=300, Step=5, Value=235};
 
-    push_back_xml
-    <xml>
-      <dyn signal={
-        v1 <- signal s1;
-        v2 <- signal s2;
-        return <xml>Value: {[v1 + v2]}</xml>}
-      />
-    </xml>
+    xrow (
+
+      xcol (
+        push_back_xml
+        <xml>
+          RF budget Income: {viewsig s1.Sig1} Trln RUB<br/>
+          {s1.XML}
+        </xml>
+      );
+
+      xcol (
+        push_back_xml
+        <xml>
+          Oil export: {viewsig s2.Sig1} BOI<br/>
+          {s2.XML}
+        </xml>
+      )
+    )
+
+    (* s3 <- push_slider2 (fn x => x * (ipow 10 12)) {Min=10, Max=20, Step=1, Value=15}; *)
+
+    (* xrow ( *)
+    (*   xcol ( *)
+    (*   ); *)
+
+    (*   xcol ( *)
+    (*   ) *)
+    (* ) *)
+
+    (* push_back_xml *)
+    (* <xml> *)
+    (* <div class={B.row}> *)
+    (*   <div class={B.col_md_6}> *)
+    (*   RF budget Income: {[income_rub]} RUB *)
+    (*   </div> *)
+
+    (*   <div class={B.col_md_6}> *)
+    (*   Oil export: {[exp_bar]} Bar <br/> *)
+    (*   RF oil Income: {[oilinc_usd]}  USD <br/> *)
+    (*   </div> *)
+    (* </div> *)
+
+    (* <div class={B.row}> *)
+
+    (*   <div class={B.col_md_6}> *)
+    (*   Oil share of the income: {[oil_share]} *)
+    (*   </div> *)
+
+    (*   <div class={B.col_md_6}> *)
+    (*   Oil price {[usd_bar]} USD *)
+    (*   </div> *)
+    (* </div> *)
+
+    (* <div class={B.row}> *)
+    (*   <div class={B.col_md_1}> *)
+    (*   <h1>RUB/USD: {[rub_usd]}</h1> *)
+    (*   </div> *)
+    (* </div> *)
+
+    (* </xml>; *)
+
+    (* s1 <- push_slider { Min=1, Max=20, Step=1, Value=1 }; *)
+    (* push_back_xml <xml><br/></xml>; *)
+    (* s2 <- push_slider { Min=1, Max=20, Step=1, Value=13 }; *)
+    (* push_back_xml <xml><br/></xml>; *)
+
+    (* push_back_xml *)
+    (* <xml> *)
+    (*   <dyn signal={ *)
+    (*     v3 <- signal s3.Sig2; *)
+    (*     return <xml>Value: {[v3]}</xml>} *)
+    (*   /> *)
+    (* </xml> *)
   )
 
