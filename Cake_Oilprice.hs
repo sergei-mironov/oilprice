@@ -12,7 +12,7 @@ import Cake_Oilprice_P
 
 (app,db) = uwapp_postgres (file "Oilprice.urp") $ do
   allow mime "text/css"
-  allow url "https://github.com/grwlf/urweb-oilprice*"
+  allow url "https://github.com/grwlf/oilprice*"
   library (Bootstrap.lib)
   library (BootstrapMisc.lib)
   library (MonadPack.lib)

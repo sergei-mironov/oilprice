@@ -34,8 +34,10 @@ fun template mb : transaction page =
     <xml>
       {nar.Container
       <xml>
-        {Soup.forkme_ribbon (bless "https://github.com/grwlf/urweb-oilprice")}
-        {b}
+        {Soup.forkme_ribbon (bless "https://github.com/grwlf/oilprice")}
+        <div style="text-align:center">
+          {b}
+        </div>
       </xml>}
 
       {nar.Footer
@@ -47,7 +49,7 @@ fun template mb : transaction page =
         <p class={B.text_muted}>
         <ul style="padding-left: 0px; margin-top: 20px; color: #999;">
           {Soup.footer_doc_links (
-          <xml><a href={bless "http://github.com/grwlf/tsyrenshop"}>Sources</a></xml> ::
+          <xml><a href={bless "http://github.com/grwlf/oilprice"}>Sources</a></xml> ::
           <xml><a href={bless "http://impredicative.com/ur/"}>Ur/Web</a></xml> ::
           <xml><a href={bless "http://github.com"}>GiHub</a></xml> ::
           []
@@ -61,24 +63,6 @@ fun template mb : transaction page =
     ))))))
   where
   end
-
-fun push_slider o =
-  s <- lift (source 0);
-  i <- lift fresh;
-  push_back_xml
-  <xml>
-    <ctextbox id={i}/>
-    <active code={
-      BM.slider_add i
-        (o ++ 
-         { Label = "Current value",
-         Tooltip = "hide",
-         OnSlide = (fn v => set s v) 
-         });
-      return <xml/>
-    }/>
-  </xml>;
-  return s
 
 fun push_slider3 o =
   s1 <- lift (source 0);
@@ -203,61 +187,5 @@ fun main {} : transaction page =
         return <xml><h1>RUB/USD: {[ (income * segm)/(oil * (float price)) ]}</h1></xml>
       }/>
     </xml>
-
-
-    (* s3 <- push_slider2 (fn x => x * (ipow 10 12)) {Min=10, Max=20, Step=1, Value=15}; *)
-
-    (* xrow ( *)
-    (*   xcol ( *)
-    (*   ); *)
-
-    (*   xcol ( *)
-    (*   ) *)
-    (* ) *)
-
-    (* push_back_xml *)
-    (* <xml> *)
-    (* <div class={B.row}> *)
-    (*   <div class={B.col_md_6}> *)
-    (*   RF budget Income: {[income_rub]} RUB *)
-    (*   </div> *)
-
-    (*   <div class={B.col_md_6}> *)
-    (*   Oil export: {[exp_bar]} Bar <br/> *)
-    (*   RF oil Income: {[oilinc_usd]}  USD <br/> *)
-    (*   </div> *)
-    (* </div> *)
-
-    (* <div class={B.row}> *)
-
-    (*   <div class={B.col_md_6}> *)
-    (*   Oil share of the income: {[oil_share]} *)
-    (*   </div> *)
-
-    (*   <div class={B.col_md_6}> *)
-    (*   Oil price {[usd_bar]} USD *)
-    (*   </div> *)
-    (* </div> *)
-
-    (* <div class={B.row}> *)
-    (*   <div class={B.col_md_1}> *)
-    (*   <h1>RUB/USD: {[rub_usd]}</h1> *)
-    (*   </div> *)
-    (* </div> *)
-
-    (* </xml>; *)
-
-    (* s1 <- push_slider { Min=1, Max=20, Step=1, Value=1 }; *)
-    (* push_back_xml <xml><br/></xml>; *)
-    (* s2 <- push_slider { Min=1, Max=20, Step=1, Value=13 }; *)
-    (* push_back_xml <xml><br/></xml>; *)
-
-    (* push_back_xml *)
-    (* <xml> *)
-    (*   <dyn signal={ *)
-    (*     v3 <- signal s3.Sig2; *)
-    (*     return <xml>Value: {[v3]}</xml>} *)
-    (*   /> *)
-    (* </xml> *)
   )
 
