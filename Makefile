@@ -31,6 +31,7 @@ UWVER = $(shell $(URWEB) -version)
 	echo database\ dbname\=Oilprice  ;\
 	echo allow\ mime\ text\/css  ;\
 	echo allow\ url\ https\:\/\/github\.com\/grwlf\/oilprice\*  ;\
+	echo allow\ url\ http\:\/\/www\.rg\.ru\*  ;\
 	echo library\ \.\/lib\/uru3\/Bootstrap\/  ;\
 	echo library\ \.\/lib\/uru3\/BootstrapMisc\/  ;\
 	echo library\ \.\/lib\/urweb\-monad\-pack\/  ;\

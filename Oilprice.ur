@@ -82,27 +82,12 @@ fun push_slider3 o =
       }/>
     </xml>}
 
-fun m2b (m:float) : float = m * 7.1428571428571
+fun xdiv cls st m =
+  push_back (nest (fn x=><xml><div class={cls} style={st}>{x}</div></xml>) m)
 
-val income_rub : float = 15.0*(pow 10.0 12.0) + 82.4 * (pow 10.0 9.0)
+val xrow = xdiv B.row (STYLE "")
 
-val oil_share = 0.5
-
-val exp_bar = m2b (236.6 * (pow 10.0 6.0))
-
-val usd_bar = 60.0
-
-val oilinc_usd = (exp_bar * usd_bar)
-
-val rub_usd = (income_rub * oil_share) / oilinc_usd
-
-
-fun xdiv cls m =
-  push_back (nest (fn x=><xml><div class={cls}>{x}</div></xml>) m)
-
-val xrow = xdiv B.row
-
-val xcol = xdiv B.col_md_6
+val xcol = xdiv B.col_md_6 (STYLE "")
 
 fun ipow a b = pow (float a) (float b)
 
@@ -138,8 +123,14 @@ fun main {} : transaction page =
       xcol (
         push_back_xml
         <xml>
-          RF budget Income: {viewsig rf_income_trln.Sig} Trln RUB<br/>
-          {rf_income_trln.XML}
+          <div style="text-align:justify">
+            Revenue side of RF budget, according to the
+            <a href={bless "http://www.rg.ru/2014/12/05/budjet-dok.html"}>www.rg.ru</a>
+          </div>
+          <div>
+            RUB {viewsig rf_income_trln.Sig} trillion<br/>
+            {rf_income_trln.XML}
+          </div>
         </xml>
       );
 
