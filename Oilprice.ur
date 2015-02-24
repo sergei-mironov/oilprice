@@ -21,6 +21,8 @@ val x = @@X.push_back_xml
 val data = data_attr data_kind
 val aria = data_attr aria_kind
 
+val src = bless "https://github.com/grwlf/oilprice/Oilprice.ur"
+
 fun template mb : transaction page =
   let
   Uru.run (
@@ -34,7 +36,7 @@ fun template mb : transaction page =
     <xml>
       {nar.Container
       <xml>
-        {Soup.forkme_ribbon (bless "https://github.com/grwlf/oilprice")}
+        {Soup.forkme_ribbon src}
         <div style="text-align:center">
           {b}
         </div>
@@ -49,7 +51,7 @@ fun template mb : transaction page =
         <p class={B.text_muted}>
         <ul style="padding-left: 0px; margin-top: 20px; color: #999;">
           {Soup.footer_doc_links (
-          <xml><a href={bless "http://github.com/grwlf/oilprice"}>Sources</a></xml> ::
+          <xml><a href={src}>Sources</a></xml> ::
           <xml><a href={bless "http://impredicative.com/ur/"}>Ur/Web</a></xml> ::
           <xml><a href={bless "http://github.com"}>GiHub</a></xml> ::
           []
@@ -102,13 +104,18 @@ fun mapsig [t1:::Type] [t2:::Type] (s : source t1) (def : t2) (f: t1 -> t2) : MT
   </xml>;
   return s2
 
+val boxst = STYLE "text-align:justify; padding-top:30px"
+
+
+
+structure Test = struct
+  structure Nested = struct
+      fun myprod (x: int) (y: int) =  x * y
+  end
+end
+
 fun main {} : transaction page =
   template (
-    
-    push_back_xml
-    <xml>
-      <h1>Oil price</h1>
-    </xml>;
 
     rf_income_trln <- push_slider3 {Min=10, Max=20, Step=1, Value=15};
     rf_income_rub <- mapsig rf_income_trln.Sig 0.0 (fn x => (float x) * (ipow 10 12));
@@ -117,35 +124,44 @@ fun main {} : transaction page =
     oil_share_boe_mln <- mapsig oil_share_toe_mln.Sig 0 (fn x => round ((float x) * 7.1428571428571));
     oil_share_toe <- mapsig oil_share_toe_mln.Sig 0.0 (fn x => (float x) * (ipow 10 6));
     oil_share_boe <- mapsig oil_share_toe 0.0 (fn x => x * 7.1428571428571);
+    
+    push_back_xml
+    <xml>
+      <h1>Oil price</h1>
+    </xml>;
 
     xrow (
 
       xcol (
         push_back_xml
         <xml>
-          <div style="text-align:justify">
-            Revenue side of RF budget, according to the
+          <div style={boxst}>
+            Revenue side of 2015 RF budget, according to the
             <a href={bless "http://www.rg.ru/2014/12/05/budjet-dok.html"}>www.rg.ru</a>
           </div>
-          <div>
-            RUB {viewsig rf_income_trln.Sig} trillion<br/>
-            {rf_income_trln.XML}
-          </div>
+          RUB {viewsig rf_income_trln.Sig} trillion<br/>
+          {rf_income_trln.XML}
         </xml>
       );
 
       xcol (
         push_back_xml
         <xml>
-          RF oil share: {viewsig oil_share_toe_mln.Sig} mln TOE<br/>
-          (approx {viewsig oil_share_boe_mln} mln BOE)<br/>
+          <div style={boxst}>
+            RF oil market share, according to
+            <a href={bless "http://www.cbr.ru/statistics/print.aspx?file=credit_statistics/crude_oil.htm"}>statistics</a>,
+            published by the Central Bank of Russia,
+            million tonnes of oil equivalent
+          </div>
+          {viewsig oil_share_toe_mln.Sig} mln TOE<br/>
+          (approx. {viewsig oil_share_boe_mln} mln barrels)<br/>
           {oil_share_toe_mln.XML}
         </xml>
       )
 
     );
 
-    oil_price_usd <- push_slider3 {Min=10, Max=110, Step=1, Value=40};
+    oil_price_usd <- push_slider3 {Min=10, Max=110, Step=1, Value=50};
     rf_income_share_percent <- push_slider3 {Min=0, Max=100, Step=1, Value=50};
     rf_income_share <- mapsig rf_income_share_percent.Sig 0.0 (fn x => (float x) / 100.0);
 
@@ -153,7 +169,10 @@ fun main {} : transaction page =
       xcol (
         push_back_xml
         <xml>
-          Oil price: {viewsig oil_price_usd.Sig} USD<br/>
+          <div style={boxst}>
+            Annual average oil price, USB per barrel
+          </div>
+          {viewsig oil_price_usd.Sig} USD<br/>
           {oil_price_usd.XML}
         </xml>
       );
@@ -161,7 +180,14 @@ fun main {} : transaction page =
       xcol (
         push_back_xml
         <xml>
-          RF income oil share: {viewsig rf_income_share_percent.Sig} %<br/>
+          <div style={boxst}>
+          Oil portion of total revenue side of RF budget, speculative. Official
+          data, published by (?) states that the oil revenue portion doesn't
+          exceed value of 25%. Other sources, like (link to kengur) points out
+          that every dollar earned by selling oil should be counted several
+          times because of indirect influence to the economy via loans.
+          </div>
+          {viewsig rf_income_share_percent.Sig} %<br/>
           {rf_income_share_percent.XML}
         </xml>
       )

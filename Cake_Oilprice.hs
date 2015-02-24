@@ -14,6 +14,7 @@ import Cake_Oilprice_P
   allow mime "text/css"
   allow url "https://github.com/grwlf/oilprice*"
   allow url "http://www.rg.ru*"
+  allow url "http://www.cbr.ru*"
   library (Bootstrap.lib)
   library (BootstrapMisc.lib)
   library (MonadPack.lib)
@@ -31,6 +32,9 @@ main = writeDefaultMakefiles $ do
   rule $ do
     phony "dropdb"
     depend db
+  rule $ do
+    phony "run"
+    shell [cmd|$app|]
   rule $ do
     phony "all"
     depend app

@@ -32,6 +32,7 @@ UWVER = $(shell $(URWEB) -version)
 	echo allow\ mime\ text\/css  ;\
 	echo allow\ url\ https\:\/\/github\.com\/grwlf\/oilprice\*  ;\
 	echo allow\ url\ http\:\/\/www\.rg\.ru\*  ;\
+	echo allow\ url\ http\:\/\/www\.cbr\.ru\*  ;\
 	echo library\ \.\/lib\/uru3\/Bootstrap\/  ;\
 	echo library\ \.\/lib\/uru3\/BootstrapMisc\/  ;\
 	echo library\ \.\/lib\/urweb\-monad\-pack\/  ;\
@@ -188,6 +189,9 @@ UWVER = $(shell $(URWEB) -version)
 	echo include\ \.\/autogen\/BootstrapSlider\_js\_c\.h  ;\
 	echo link\ \.\/autogen\/BootstrapSlider\_js\_c\.o  ;\
 	) > ./.cake3/tmp___lib_uru3_BootstrapMisc_lib_in_1
+.PHONY: ./run
+./run: ./Makefile.dev ./Oilprice.exe ./Oilprice.sql
+	./Oilprice.exe
 .PHONY: ./dropdb
 ./dropdb: ./Makefile.dev ./Oilprice.db
 ./Oilprice.db: ./Makefile.dev ./Oilprice.exe ./Oilprice.sql
@@ -468,6 +472,8 @@ ifneq ($(MAKECMDGOALS),clean)
 ./.cake3/tmp___lib_uru3_BootstrapMisc_lib_in_2: ./.fix-multy1
 .PHONY: ./.cake3/tmp___lib_uru3_BootstrapMisc_lib_in_1
 ./.cake3/tmp___lib_uru3_BootstrapMisc_lib_in_1: ./.fix-multy1
+.PHONY: ./run
+./run: ./.fix-multy1
 .PHONY: ./dropdb
 ./dropdb: ./.fix-multy1
 .PHONY: ./Oilprice.db
