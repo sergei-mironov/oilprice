@@ -135,27 +135,33 @@ fun main {} : transaction page =
       xcol (
         push_back_xml
         <xml>
-          <div style={boxst}>
+          <p style={boxst}>
             Revenue side of 2015 RF budget, according to the
             <a href={bless "http://www.rg.ru/2014/12/05/budjet-dok.html"}>www.rg.ru</a>
-          </div>
+            Note, that oil price near 100 USD per barrel was
+            expected originally.
+          </p>
+          <p>
           RUB {viewsig rf_income_trln.Sig} trillion<br/>
           {rf_income_trln.XML}
+          </p>
         </xml>
       );
 
       xcol (
         push_back_xml
         <xml>
-          <div style={boxst}>
+          <p style={boxst}>
             RF oil market share, according to
             <a href={bless "http://www.cbr.ru/statistics/print.aspx?file=credit_statistics/crude_oil.htm"}>statistics</a>,
             published by the Central Bank of Russia,
-            million tonnes of oil equivalent
-          </div>
+            measured in million tonnes of oil equivalent
+          </p>
+          <p>
           {viewsig oil_share_toe_mln.Sig} mln TOE<br/>
           (approx. {viewsig oil_share_boe_mln} mln barrels)<br/>
           {oil_share_toe_mln.XML}
+          </p>
         </xml>
       )
 
@@ -169,26 +175,36 @@ fun main {} : transaction page =
       xcol (
         push_back_xml
         <xml>
-          <div style={boxst}>
-            Annual average oil price, USB per barrel
-          </div>
-          {viewsig oil_price_usd.Sig} USD<br/>
+          <p style={boxst}>
+            <b>Annual average oil price, USD per barrel.</b> According to
+            the reference data, provided by the
+            <a href={bless "http://www.cbr.ru/statistics/print.aspx?file=credit_statistics/crude_oil.htm"}>Central
+            Bank of Russia</a>, approx. 10% of the russian oil goes to post-soviet
+            countries with 50% discount.
+          </p>
+          <p>
+          USD {viewsig oil_price_usd.Sig}<br/>
           {oil_price_usd.XML}
+          </p>
         </xml>
       );
 
       xcol (
         push_back_xml
         <xml>
-          <div style={boxst}>
-          Oil portion of total revenue side of RF budget, speculative. Official
-          data, published by (?) states that the oil revenue portion doesn't
-          exceed value of 25%. Other sources, like (link to kengur) points out
-          that every dollar earned by selling oil should be counted several
-          times because of indirect influence to the economy via loans.
-          </div>
+          <p style={boxst}>
+          <b>Oil portion of total revenue side of RF budget, speculative.</b>
+          Official data, published by (?) states that the oil revenue portion
+          doesn't exceed value of 25%. Other sources, like (link to kengur)
+          points out that every dollar earned from oil should be counted more
+          than once because of indirect influence to the economy via loans.
+          </p>
           {viewsig rf_income_share_percent.Sig} %<br/>
           {rf_income_share_percent.XML}
+          <p>
+          Note, that the higher this value, the more precise total estimate
+          should be
+          </p>
         </xml>
       )
     );
