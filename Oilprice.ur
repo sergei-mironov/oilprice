@@ -17,11 +17,12 @@ val push_front = @@X.push_front
 val push_back_ = @@X.push_back_
 val push_front_ = @@X.push_front_
 val push_back_xml = @@X.push_back_xml
+val push_front_xml = @@X.push_front_xml
 val x = @@X.push_back_xml
 val data = data_attr data_kind
 val aria = data_attr aria_kind
 
-val src = bless "https://github.com/grwlf/oilprice/Oilprice.ur"
+val src = bless "https://github.com/grwlf/oilprice/blob/master/Oilprice.ur"
 
 fun template mb : transaction page =
   let
@@ -46,14 +47,19 @@ fun template mb : transaction page =
       <xml>
         <hr/>
         <p class={B.text_muted}>
-          Powerd by <a href={bless "http://impredicative.com/ur/"}>Ur/Web</a> framework.
+          The site is developed in <a href={bless
+          "http://impredicative.com/ur/"}>Ur/Web</a>, the purely-functional
+          language for Web development.
         </p>
         <p class={B.text_muted}>
         <ul style="padding-left: 0px; margin-top: 20px; color: #999;">
           {Soup.footer_doc_links (
           <xml><a href={src}>Sources</a></xml> ::
-          <xml><a href={bless "http://impredicative.com/ur/"}>Ur/Web</a></xml> ::
-          <xml><a href={bless "http://github.com"}>GiHub</a></xml> ::
+          <xml><a href={bless "http://github.com/grwlf/cake3"}>Cake3</a></xml> ::
+          <xml><a href={bless "http://github.com/grwlf/uru3"}>Uru3</a></xml> ::
+          <xml><a href={bless "http://github.com/grwlf/urweb-monad-pack"}>MonadPack</a></xml> ::
+          <xml><a href={bless "http://github.com/grwlf/urweb-xmlw"}>XMLW</a></xml> ::
+          <xml><a href={bless "http://github.com/grwlf/urweb-soup"}>Soup</a></xml> ::
           []
           )}
         </ul>
@@ -124,11 +130,6 @@ fun main {} : transaction page =
     oil_share_boe_mln <- mapsig oil_share_toe_mln.Sig 0 (fn x => round ((float x) * 7.1428571428571));
     oil_share_toe <- mapsig oil_share_toe_mln.Sig 0.0 (fn x => (float x) * (ipow 10 6));
     oil_share_boe <- mapsig oil_share_toe 0.0 (fn x => x * 7.1428571428571);
-    
-    push_back_xml
-    <xml>
-      <h1>Oil price</h1>
-    </xml>;
 
     xrow (
 
@@ -136,7 +137,7 @@ fun main {} : transaction page =
         push_back_xml
         <xml>
           <p style={boxst}>
-            Revenue side of 2015 RF budget, according to the
+            <b>Revenue side of 2015 RF budget</b>, according to the
             <a href={bless "http://www.rg.ru/2014/12/05/budjet-dok.html"}>www.rg.ru</a>
             Note, that oil price near 100 USD per barrel was
             expected originally.
@@ -152,7 +153,7 @@ fun main {} : transaction page =
         push_back_xml
         <xml>
           <p style={boxst}>
-            RF oil market share, according to
+            <b>RF oil market share</b>, according to
             <a href={bless "http://www.cbr.ru/statistics/print.aspx?file=credit_statistics/crude_oil.htm"}>statistics</a>,
             published by the Central Bank of Russia,
             measured in million tonnes of oil equivalent
@@ -209,7 +210,7 @@ fun main {} : transaction page =
       )
     );
 
-    push_back_xml
+    push_front_xml
     <xml>
       <dyn signal={
         income <- signal (rf_income_rub);
@@ -217,7 +218,14 @@ fun main {} : transaction page =
         price <- signal (oil_price_usd.Sig);
         segm <- signal (rf_income_share);
 
-        return <xml><h1>RUB/USD: {[ (income * segm)/(oil * (float price)) ]}</h1></xml>
+        let
+          val v = (income * segm)/(oil * (float price))
+
+          val fmt = show ((float (round(v * 100.0))) / 100.0)
+        in
+          return <xml><h1>RUB/USD: {cdata fmt}</h1></xml>
+        end
+
       }/>
     </xml>
   )
