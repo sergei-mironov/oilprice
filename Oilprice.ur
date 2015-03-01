@@ -195,10 +195,9 @@ fun main {} : transaction page =
         <xml>
           <p style={boxst}>
           <b>Oil portion of total revenue side of RF budget, speculative.</b>
-          Official data, published by (?) states that the oil revenue portion
-          doesn't exceed value of 25%. Other sources, like (link to kengur)
-          points out that every dollar earned from oil should be counted more
-          than once because of indirect influence to the economy via loans.
+          Official data states that the oil revenue portion doesn't exceed value
+          of 25%. In contrast, external analysts point out that official
+          calculations is not precise and the ratio should be increased.
           </p>
           {viewsig rf_income_share_percent.Sig} %<br/>
           {rf_income_share_percent.XML}
