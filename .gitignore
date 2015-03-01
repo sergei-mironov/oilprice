@@ -1,0 +1,9 @@
+*.exe
+*.sql
+*.db
+*_P.hs
+.*
+*.o
+Cakegen
+*urp
+*urp.in
