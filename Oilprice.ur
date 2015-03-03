@@ -132,7 +132,7 @@ fun main {} : transaction page =
             <b>Revenue side of 2015 RF budget</b>, according to the
             <a href={bless "http://www.rg.ru/2014/12/05/budjet-dok.html"}>www.rg.ru</a>
             Note, that oil price near 100 USD per barrel was
-            expected originally.
+            expected at the time of adoption.
           </p>
           <p>
           RUB {viewsig rf_income_trln.Sig} trillion<br/>
@@ -145,10 +145,10 @@ fun main {} : transaction page =
         push_back_xml
         <xml>
           <p style={boxst}>
-            <b>RF oil market share</b>, according to
-            <a href={bless "http://www.cbr.ru/statistics/print.aspx?file=credit_statistics/crude_oil.htm"}>statistics</a>,
-            published by the Central Bank of Russia,
-            measured in million tonnes of oil equivalent
+            <b>RF oil market share</b>, measured in million tonnes of oil
+            equivalent. The value could be estimated on the basis of
+            <a href={bless "http://www.cbr.ru/statistics/print.aspx?file=credit_statistics/crude_oil.htm"}>statistical data</a>,
+            published by the Central Bank of Russia.
           </p>
           <p>
           {viewsig oil_share_toe_mln.Sig} mln TOE<br/>
@@ -172,7 +172,7 @@ fun main {} : transaction page =
             <b>Annual average oil price, USD per barrel.</b> According to
             the reference data, provided by the
             <a href={bless "http://www.cbr.ru/statistics/print.aspx?file=credit_statistics/crude_oil.htm"}>Central
-            Bank of Russia</a>, approx. 10% of the russian oil goes to post-soviet
+            Bank of Russia</a>, approx. Note, that 10% of the Russian oil goes to post-soviet
             countries with 50% discount.
           </p>
           <p>
@@ -187,9 +187,10 @@ fun main {} : transaction page =
         <xml>
           <p style={boxst}>
           <b>Oil portion of total revenue side of RF budget, speculative.</b>
-          Official data states that the oil revenue portion doesn't exceed value
-          of 25%. In contrast, external analysts point out that official
-          calculations is not precise and the ratio should be increased.
+          Official data states that the oil portion of revenue doesn't exceed
+          the value of 25%. In contrast, external analysts point out that
+          official calculations are not precise and the ratio should be
+          significantly increased.
           </p>
           {viewsig rf_income_share_percent.Sig} %<br/>
           {rf_income_share_percent.XML}
