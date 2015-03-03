@@ -194,7 +194,7 @@ fun main {} : transaction page =
           {viewsig rf_income_share_percent.Sig} %<br/>
           {rf_income_share_percent.XML}
           <p>
-          Note, that the higher this value, the more precise total estimate
+          Note, that the higher this value is, the more precise total estimate
           should be
           </p>
         </xml>
