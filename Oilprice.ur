@@ -112,14 +112,6 @@ fun mapsig [t1:::Type] [t2:::Type] (s : source t1) (def : t2) (f: t1 -> t2) : MT
 
 val boxst = STYLE "text-align:justify; padding-top:30px"
 
-
-
-structure Test = struct
-  structure Nested = struct
-      fun myprod (x: int) (y: int) =  x * y
-  end
-end
-
 fun main {} : transaction page =
   template (
 
