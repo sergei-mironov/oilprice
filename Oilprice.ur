@@ -169,10 +169,9 @@ fun main {} : transaction page =
         push_back_xml
         <xml>
           <p style={boxst}>
-            <b>Annual average oil price, USD per barrel.</b> According to
-            the reference data, provided by the
+            <b>Annual average oil price, USD per barrel,</b> based on reference data, provided by the
             <a href={bless "http://www.cbr.ru/statistics/print.aspx?file=credit_statistics/crude_oil.htm"}>Central
-            Bank of Russia</a>, approx. Note, that 10% of the Russian oil goes to post-soviet
+            Bank of Russia</a>. Note, that 10% of the Russian oil goes to post-soviet
             countries with 50% discount.
           </p>
           <p>
