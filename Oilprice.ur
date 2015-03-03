@@ -47,9 +47,9 @@ fun template mb : transaction page =
       <xml>
         <hr/>
         <p class={B.text_muted}>
-          The site is developed in <a href={bless
-          "http://impredicative.com/ur/"}>Ur/Web</a>, the purely-functional
-          language for Web development.
+          The site is written in <a href={bless
+          "http://impredicative.com/ur/"}>Ur/Web</a>, the general-purpose typed functional
+          language.
         </p>
         <p class={B.text_muted}>
         <ul style="padding-left: 0px; margin-top: 20px; color: #999;">
