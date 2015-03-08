@@ -119,33 +119,52 @@ fun mapsig [t1:::Type] [t2:::Type] (s : source t1) (def : t2) (f: t1 -> t2) : MT
 
 val boxst = STYLE "text-align:justify; padding-top:30px"
 
-fun main {} : transaction page =
+datatype lang = RU | EN
+
+type page_state = { Lang : lang, V1 : int, V2 : int, V3 : int, V4 : int }
+
+val defState = {Lang = EN, V1=15, V2=235, V3=50, V4=50}
+
+fun main_ s : transaction page =
   template (
+
+    rf_income_trln <- push_slider3 {Min=10, Max=20, Step=1, Value = s.V1};
+    rf_income_rub <- mapsig rf_income_trln.Sig 0.0 (fn x => (float x) * (ipow 10 12));
+
+    oil_share_toe_mln <- push_slider3 {Min=200, Max=300, Step=5, Value = s.V2};
+    oil_share_boe_mln <- mapsig oil_share_toe_mln.Sig 0 (fn x => round ((float x) * 7.1428571428571));
+    oil_share_toe <- mapsig oil_share_toe_mln.Sig 0.0 (fn x => (float x) * (ipow 10 6));
+    oil_share_boe <- mapsig oil_share_toe 0.0 (fn x => x * 7.1428571428571);
+
+    oil_price_usd <- push_slider3 {Min=10, Max=110, Step=1, Value = s.V3};
+    rf_income_share_percent <- push_slider3 {Min=0, Max=100, Step=1, Value = s.V4};
+    rf_income_share <- mapsig rf_income_share_percent.Sig 0.0 (fn x => (float x) / 100.0);
+
     xrow(
       xcol1 (
-        push_back_xml
-        <xml>
-          <div style="text-align:right; min-height:20px">
-            <a link={main {}}><img src={Flag_uk_gif.geturl}/></a>
-            <a link={main {}}><img src={Flag_ru_gif.geturl}/></a>
-          </div>
-        </xml>
+        let
+          fun linkme l x =
+            <xml>
+              <a link={main {}} onclick={fn _ =>
+                v1 <- get rf_income_trln.Sig;
+                v2 <- get oil_share_toe_mln.Sig;
+                v3 <- get oil_price_usd.Sig;
+                v4 <- get rf_income_share_percent.Sig;
+                redirect (url(main_ ({Lang=l, V1=v1, V2=v2, V3=v3, V4=v4})))}>{x}</a>
+            </xml>
+        in
+          push_back_xml
+          <xml>
+            <div style="text-align:right; min-height:20px">
+              {linkme EN <xml><img src={Flag_uk_gif.geturl}/></xml>}
+              {linkme RU <xml><img src={Flag_ru_gif.geturl}/></xml>}
+            </div>
+          </xml>
+        end
       )
     );
 
     xnest (
-      rf_income_trln <- push_slider3 {Min=10, Max=20, Step=1, Value=15};
-      rf_income_rub <- mapsig rf_income_trln.Sig 0.0 (fn x => (float x) * (ipow 10 12));
-
-      oil_share_toe_mln <- push_slider3 {Min=200, Max=300, Step=5, Value=235};
-      oil_share_boe_mln <- mapsig oil_share_toe_mln.Sig 0 (fn x => round ((float x) * 7.1428571428571));
-      oil_share_toe <- mapsig oil_share_toe_mln.Sig 0.0 (fn x => (float x) * (ipow 10 6));
-      oil_share_boe <- mapsig oil_share_toe 0.0 (fn x => x * 7.1428571428571);
-
-      oil_price_usd <- push_slider3 {Min=10, Max=110, Step=1, Value=50};
-      rf_income_share_percent <- push_slider3 {Min=0, Max=100, Step=1, Value=50};
-      rf_income_share <- mapsig rf_income_share_percent.Sig 0.0 (fn x => (float x) / 100.0);
-
       xrow (
 
         xcol2 (
@@ -242,4 +261,6 @@ fun main {} : transaction page =
       </xml>
     )
   )
+
+and main {} = main_ defState
 
