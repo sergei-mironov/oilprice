@@ -23,8 +23,13 @@ val data = data_attr data_kind
 val aria = data_attr aria_kind
 
 val src = bless "https://github.com/grwlf/oilprice/blob/master/Oilprice.ur"
+val srcprj = bless "https://github.com/grwlf/oilprice"
 
-fun template mb : transaction page =
+datatype lang = RU | EN
+
+fun chooselang x en ru = push_back_xml (case x.Lang of | RU => ru | EN => en)
+
+fun template l mb : transaction page =
   let
   Uru.run (
   JQuery.add (
@@ -42,7 +47,7 @@ fun template mb : transaction page =
     <xml>
       {nar.Container
       <xml>
-        {Soup.forkme_ribbon src}
+        {Soup.forkme_ribbon srcprj}
         <div style="text-align:center">
           {b}
         </div>
@@ -51,11 +56,18 @@ fun template mb : transaction page =
       {nar.Footer
       <xml>
         <hr/>
+        {case l of
+        |EN => <xml>
         <p class={B.text_muted}>
-          The site is written in <a href={bless
-          "http://impredicative.com/ur/"}>Ur/Web</a>, the general-purpose typed functional
-          language.
+          The site is written in <a href={bless "http://impredicative.com/ur/"}>Ur/Web</a>,
+          the general-purpose typed functional language.
         </p>
+        </xml>
+        |RU => <xml>
+        <p class={B.text_muted}>
+          Сайт разработан на типизированном функциональном языке <a href={bless "http://impredicative.com/ur/"}>Ur/Web</a>.
+        </p>
+        </xml>}
         <p class={B.text_muted}>
         <ul style="padding-left: 0px; margin-top: 20px; color: #999;">
           {Soup.footer_doc_links (
@@ -119,14 +131,12 @@ fun mapsig [t1:::Type] [t2:::Type] (s : source t1) (def : t2) (f: t1 -> t2) : MT
 
 val boxst = STYLE "text-align:justify; padding-top:30px"
 
-datatype lang = RU | EN
-
 type page_state = { Lang : lang, V1 : int, V2 : int, V3 : int, V4 : int }
 
 val defState = {Lang = EN, V1=15, V2=235, V3=50, V4=50}
 
 fun main_ s : transaction page =
-  template (
+  template s.Lang (
 
     rf_income_trln <- push_slider3 {Min=10, Max=20, Step=1, Value = s.V1};
     rf_income_rub <- mapsig rf_income_trln.Sig 0.0 (fn x => (float x) * (ipow 10 12));
@@ -168,7 +178,7 @@ fun main_ s : transaction page =
       xrow (
 
         xcol2 (
-          push_back_xml
+          chooselang s
           <xml>
             <p style={boxst}>
               <b>Revenue side of 2015 RF budget</b>, according to the
@@ -181,10 +191,24 @@ fun main_ s : transaction page =
             {rf_income_trln.XML}
             </p>
           </xml>
+
+          <xml>
+            <p style={boxst}>
+              <b>Общий доход, запланированный в бюджете России на текущий год</b>.
+              <a href={bless "http://www.rg.ru/2014/12/05/budjet-dok.html"}>Российская газета</a>
+              публикует информацию, которая может быть использована для оценки
+              этого параметра. Известно, что в бюджет на 2015 год была
+              заложена цена на нефть в 100 долларов за баррель.
+            </p>
+            <p>
+            {viewsig rf_income_trln.Sig} трлн. руб.<br/>
+            {rf_income_trln.XML}
+            </p>
+          </xml>
         );
 
         xcol2 (
-          push_back_xml
+          chooselang s
           <xml>
             <p style={boxst}>
               <b>RF oil market share</b>, measured in million tonnes of oil
@@ -198,12 +222,25 @@ fun main_ s : transaction page =
             {oil_share_toe_mln.XML}
             </p>
           </xml>
+          <xml>
+            <p style={boxst}>
+              <b>Годовой объём поставок нефти из России</b>, выраженный в
+              миллионах тонн нефтяного эквивалента.
+              <a href={bless "http://www.cbr.ru/statistics/print.aspx?file=credit_statistics/crude_oil.htm"}>Статистика</a>,
+              публикуемая ЦБ РФ, приводит необходимые справочные данные.
+            </p>
+            <p>
+            {viewsig oil_share_toe_mln.Sig} млн. TOE <br/>
+            (прибл. {viewsig oil_share_boe_mln} млн. баррелей)<br/>
+            {oil_share_toe_mln.XML}
+            </p>
+          </xml>
         )
       );
 
       xrow (
         xcol2 (
-          push_back_xml
+          chooselang s
           <xml>
             <p style={boxst}>
               <b>Annual average oil price, USD per barrel,</b> based on reference data, provided by the
@@ -216,10 +253,23 @@ fun main_ s : transaction page =
             {oil_price_usd.XML}
             </p>
           </xml>
+          <xml>
+            <p style={boxst}>
+              <b>Среднегодовая цена за баррель нефти, в долларах США.</b>
+              Центральный Банк России публикует 
+              <a href={bless "http://www.cbr.ru/statistics/print.aspx?file=credit_statistics/crude_oil.htm"}>статистику</a>
+              экспорта за время начиная с 2000 года. Согласно приведенным
+              данным, примерно 10% нефти поставлялось в страны СНГ со скидкой в 50%
+            </p>
+            <p>
+            {viewsig oil_price_usd.Sig} долларов за баррель<br/>
+            {oil_price_usd.XML}
+            </p>
+          </xml>
         );
 
         xcol2 (
-          push_back_xml
+          chooselang s
           <xml>
             <p style={boxst}>
             <b>Oil portion of total revenue side of RF budget, speculative.</b>
@@ -233,6 +283,20 @@ fun main_ s : transaction page =
             <p>
             Note, that the higher this value is, the more precise total estimate
             should be
+            </p>
+          </xml>
+          <xml>
+            <p style={boxst}>
+            <b>Доля дохода, получаемого за счет продажи нефти.</b>
+            Согласно официальным данным, эта доля не превышает
+            25%. В сети, однако, популярно мнение, что публикуемая цифра
+            занижена.
+            </p>
+            {viewsig rf_income_share_percent.Sig} %<br/>
+            {rf_income_share_percent.XML}
+            <p>
+            Чем больше значение данного параметра, тем точнее должна быть оценка
+            курса рубля.
             </p>
           </xml>
         )
@@ -250,10 +314,24 @@ fun main_ s : transaction page =
             val v = (income * segm)/(oil * (float price))
 
             val fmt = show ((float (round(v * 100.0))) / 100.0)
+
+            val st1 = STYLE "display:inline-block"
+            val st2 = STYLE "display:block;font-size:x-small;color:#A7A7A7;text-align:left"
           in
             return <xml>
               <active code={
-                return <xml><h1>RUB/USD: {cdata fmt}</h1></xml>
+                return
+                (case s.Lang of
+                  |EN=><xml>
+                    <h1 style={st1}>
+                      <span style={st2}>Your forecast:</span> RUB/USD {cdata fmt} 
+                    </h1>
+                  </xml>
+                  |RU=><xml>
+                    <h1 style={st1}>
+                      <span style={st2}>Ваш прогноз:</span> {cdata fmt} рублей за доллар США
+                    </h1>
+                  </xml>)
               }/>
               </xml>
           end
@@ -263,4 +341,6 @@ fun main_ s : transaction page =
   )
 
 and main {} = main_ defState
+and main_ru {} = main_ (defState -- #Lang ++ {Lang = RU})
+and main_en {} = main_ (defState -- #Lang ++ {Lang = EN})
 
