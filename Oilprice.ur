@@ -324,12 +324,12 @@ fun main_ s : transaction page =
                 (case s.Lang of
                   |EN=><xml>
                     <h1 style={st1}>
-                      <span style={st2}>Your forecast:</span> RUB/USD {cdata fmt} 
+                      <span style={st2}>Exchange rate forecast:</span> RUB/USD {cdata fmt}
                     </h1>
                   </xml>
                   |RU=><xml>
                     <h1 style={st1}>
-                      <span style={st2}>Ваш прогноз:</span> {cdata fmt} рублей за доллар США
+                      <span style={st2}>Прогноз курса:</span> {cdata fmt} рублей за доллар США
                     </h1>
                   </xml>)
               }/>
