@@ -40,6 +40,7 @@ fun template l mb : transaction page =
   <xml>
     <title>OilPrice</title>
     <link rel="icon" type="image/x-icon" href={Favicon_ico.geturl}/>
+    {Analytics.insert "UA-55678474-2"}
   </xml> (
   Uru.withBody (fn _ =>
     b <- X.run mb;
