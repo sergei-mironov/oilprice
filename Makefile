@@ -31,8 +31,8 @@ UWVER = $(shell $(URWEB) -version)
 	) > ./.cake3/tmp___Oilprice_in_2
 ./.cake3/tmp___Oilprice_in_1: ./Makefile ./Oilprice.ur ./Oilprice.urs ./autogen/Oilprice_css.ur ./autogen/Oilprice_css_c.h ./autogen/Oilprice_css_c.o ./autogen/favicon_ico.ur ./autogen/favicon_ico_c.h ./autogen/favicon_ico_c.o ./autogen/flag_ru_gif.ur ./autogen/flag_ru_gif_c.h ./autogen/flag_ru_gif_c.o ./autogen/flag_uk_gif.ur ./autogen/flag_uk_gif_c.h ./autogen/flag_uk_gif_c.o ./lib/uru3/Bootstrap/lib.urp ./lib/uru3/BootstrapMisc/lib.urp ./lib/urweb-monad-pack/lib.urp ./lib/urweb-prelude/lib.urp ./lib/urweb-soup/lib.urp ./lib/urweb-xmlw/lib.urp
 	( \
-	echo sql\ \.\/Oilprice\.sql  ;\
 	echo database\ dbname\=Oilprice  ;\
+	echo sql\ \.\/Oilprice\.sql  ;\
 	echo allow\ mime\ text\/css  ;\
 	echo allow\ url\ https\:\/\/github\.com\/grwlf\/oilprice\*  ;\
 	echo allow\ url\ http\:\/\/www\.rg\.ru\*  ;\
