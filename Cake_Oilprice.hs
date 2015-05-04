@@ -32,6 +32,7 @@ import Cake_Oilprice_P
   ur (pair $ file "Oilprice.ur")
 
 main = writeDefaultMakefiles $ do
+  prebuild [cmd| for l in lib/*;  do test -f $$$$l/.git || { echo $$$$l is empty. Have you forgot to 'git submodule update --init' ? ; exit 1; }; done |]
   rule $ do
     phony "dropdb"
     depend db

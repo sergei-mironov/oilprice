@@ -368,6 +368,7 @@ ifneq ($(MAKECMDGOALS),clean)
 .INTERMEDIATE: ./.fix-multy1
 ./.fix-multy1:
 	-mkdir .cake3
+	for l in lib/*;  do test -f $$l/.git || { echo $$l is empty. Have you forgot to 'git submodule update --init' ? ; exit 1; }; done
 	MAIN=1 $(MAKE) -f ./Makefile $(MAKECMDGOALS)
 .PHONY: ./Oilprice.exe
 ./Oilprice.exe: ./.fix-multy1
