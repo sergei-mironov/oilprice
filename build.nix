@@ -23,17 +23,17 @@ rec {
     };
 
     statements = [
-      (set "allow mime 'text/css'")
-      (set "allow url 'https://github.com/grwlf/oilprice*'")
-      (set "allow url 'http://www.rg.ru*'")
-      (set "allow url 'http://www.cbr.ru*'")
-      (embed ./favicon.ico)
-      (embed ./flag_ru.gif)
-      (embed ./flag_uk.gif)
+      (set "allow mime text/css")
+      (set "allow url https://github.com/grwlf/oilprice*")
+      (set "allow url http://www.rg.ru*")
+      (set "allow url http://www.cbr.ru*")
       (sys "list")
       (sys "char")
       (sys "string")
       (sys "option")
+      (embed ./favicon.ico)
+      (embed ./flag_ru.gif)
+      (embed ./flag_uk.gif)
       (embed-css ./Oilprice.css)
       (src ./Oilprice.ur ./Oilprice.urs)
     ];
