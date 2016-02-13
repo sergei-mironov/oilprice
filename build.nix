@@ -1,10 +1,8 @@
-{libraries ? {}} :
+{ libraries ? {}
+, uwb ? (import <urweb-build>) { inherit libraries; }
+} :
 
-let
-
-  uwb = (import <urweb-build>) { inherit libraries; };
-
-in with uwb;
+with uwb;
 
 rec {
 

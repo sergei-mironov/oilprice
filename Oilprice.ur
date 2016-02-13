@@ -99,7 +99,7 @@ fun push_slider3 o =
       <ctextbox id={i}/>
       <active code={
         BM.slider_add i
-          (o ++ 
+          (o ++
            { Label = "Current value",
            Tooltip = "hide",
            OnSlide = (fn (v:int) => set s1 v)
@@ -154,21 +154,21 @@ fun main_ s : transaction page =
     xrow(
       xcol1 (
         let
-          fun linkme l x =
+          fun linkme l u =
             <xml>
-              <a link={main {}} onclick={fn _ =>
+              <img src={u} onclick={fn _ =>
                 v1 <- get rf_income_trln.Sig;
                 v2 <- get oil_share_toe_mln.Sig;
                 v3 <- get oil_price_usd.Sig;
                 v4 <- get rf_income_share_percent.Sig;
-                redirect (url(main_ ({Lang=l, V1=v1, V2=v2, V3=v3, V4=v4})))}>{x}</a>
+                redirect (url(main_ ({Lang=l, V1=v1, V2=v2, V3=v3, V4=v4})))}/>
             </xml>
         in
           push_back_xml
           <xml>
             <div style="text-align:right; min-height:20px">
-              {linkme EN <xml><img src={Flag_uk_gif.geturl}/></xml>}
-              {linkme RU <xml><img src={Flag_ru_gif.geturl}/></xml>}
+              {linkme EN Flag_uk_gif.geturl}
+              {linkme RU Flag_ru_gif.geturl}
             </div>
           </xml>
         end
@@ -209,12 +209,15 @@ fun main_ s : transaction page =
         );
 
         xcol2 (
+          let
+            val cbr = bless "http://www.cbr.ru/statistics/print.aspx?file=credit_statistics/crude_oil.htm"
+          in
           chooselang s
           <xml>
             <p style={boxst}>
               <b>RF oil market share</b>, measured in million tonnes of oil
               equivalent. The value could be estimated on the basis of
-              <a href={bless "http://www.cbr.ru/statistics/print.aspx?file=credit_statistics/crude_oil.htm"}>statistical data</a>,
+              <a href={cbr}>statistical data</a>,
               published by the Central Bank of Russia.
             </p>
             <p>
@@ -227,7 +230,7 @@ fun main_ s : transaction page =
             <p style={boxst}>
               <b>Годовой объём поставок нефти из России</b>, выраженный в
               миллионах тонн нефтяного эквивалента.
-              <a href={bless "http://www.cbr.ru/statistics/print.aspx?file=credit_statistics/crude_oil.htm"}>Статистика</a>,
+              <a href={cbr}>Статистика</a>,
               публикуемая ЦБ РФ, приводит необходимые справочные данные.
             </p>
             <p>
@@ -236,6 +239,7 @@ fun main_ s : transaction page =
             {oil_share_toe_mln.XML}
             </p>
           </xml>
+          end
         )
       );
 
@@ -257,7 +261,7 @@ fun main_ s : transaction page =
           <xml>
             <p style={boxst}>
               <b>Среднегодовая цена за баррель нефти, в долларах США.</b>
-              Центральный Банк России публикует 
+              Центральный Банк России публикует
               <a href={bless "http://www.cbr.ru/statistics/print.aspx?file=credit_statistics/crude_oil.htm"}>статистику</a>
               экспорта за время начиная с 2000 года. Согласно приведенным
               данным, примерно 10% нефти поставлялось в страны СНГ со скидкой в 50%
